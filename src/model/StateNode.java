@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class StateNode {
 	public int width;
@@ -13,4 +14,9 @@ public abstract class StateNode {
 	}
 	public abstract double eval();
 	public abstract ArrayList<StateNode> getNeighbours();
+	
+	public StateNode getRandomNeighBour(ArrayList<StateNode> neighBours){
+		Random r = new Random();
+		return neighBours.get(r.nextInt(neighBours.size()));
+	}
 }

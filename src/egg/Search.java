@@ -7,26 +7,39 @@ import model.Temperature;
 
 public class Search {
 	
+	//Best eval this far
 	public double mEval = 0;
+	
+	//Holder for the init node
 	public StateNode firstNode;
+	
+	//Holder for the init temperature
 	public Temperature firstTemp;
+	
+	//Holder for the potential nextNode eval
 	public double nextNodeEval;
+	
+	//Holder for the currentNode eval
 	public double currentNodeEval;
 	
 	public Search(StateNode initNode, Temperature temp){
 		firstNode = initNode;
 		firstTemp = temp;
+		//Starts the search
 		performSearch(firstNode, firstTemp);
 	}
 	
+	//Perfroms the search, starting with the initNode and the user given temperature
 	public StateNode performSearch(StateNode initNode, Temperature temp){
 		StateNode currentNode = initNode;
 		double currentTemp = temp.temperature;
 		
 		while(currentTemp > 0){
+			//Returns the currentNode if a solution is reached
 			if(currentNode.eval() == 1){
 				return currentNode;
 			}
+			
 			
 			ArrayList<StateNode> neighBours = new ArrayList<StateNode>();
 			currentTemp = temp.currentTemp();
@@ -49,7 +62,7 @@ public class Search {
 			if(x>p){
 				currentNode = nextNode;
 			}else{
-				//currentNode = currentNode.getRandomNeighBour(neighBours);
+				currentNode = currentNode.getRandomNeighBour(neighBours);
 			}
 			
 		}
