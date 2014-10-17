@@ -1,16 +1,22 @@
 package egg;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import model.StateNode;
 
 public class EggStateNode extends StateNode{
-
-	public EggStateNode(int sizeX, int sizeY, int k) {
-		super(sizeX, sizeY, k);
+	private boolean[][] board;
+	public static int UP = -1;
+	public static int DOWN = 1;
+	public EggStateNode(int width, int height, int k) {
+		super(width, height, k);
+		board = new boolean[height][width];
 		// TODO Auto-generated constructor stub
 	}
-
+	public void setBoard(boolean[][] board){
+		this.board = board;
+	}
 	@Override
 	public double eval() {
 		// TODO Auto-generated method stub
@@ -19,8 +25,57 @@ public class EggStateNode extends StateNode{
 
 	@Override
 	public ArrayList<StateNode> getNeighbours() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<StateNode> neighbourList = new ArrayList<StateNode>();
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				if(board[i][j] == true){
+					//Up
+					EggStateNode newNodeUp = new EggStateNode(width,height,k);
+					boolean[][] newBoardUp = generateNewBoard(j, i, UP);
+					newNodeUp.setBoard(newBoardUp);
+					neighbourList.add(newNodeUp);
+					
+					
+				}
+			}
+		}
+	}
+	private boolean[][] generateNewBoard(int eggX, int eggY,int dir){
+		boolean[][] newBoard = new boolean[height][width];
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				newBoard[i][j] = board[i][j];
+			}
+		}
+		if(board[eggY + dir][eggX] == true){
+			return null;
+		}else{
+			newBoard[eggY][eggX] = false;
+			newBoard[eggY + dir][eggX] = true;
+			return newBoard;
+		}
+		
+	}
+	public void generateInitialState(){
+		Random r = new Random();
+		for(int i = 0; i < width; i++){
+			int placed = 0;
+			while(placed < k){
+				int rand = r.nextInt(height);
+				if(board[rand][i] == false){
+					board[rand][i] = true;
+					placed++;
+				}
+			}
+		}
+	}
+	public void printBoard(){
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				System.out.print(((board[i][j]) ? 1 : 0) + " ");
+			}
+			System.out.println();
+		}
 	}
 
 }

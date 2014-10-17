@@ -3,12 +3,12 @@ package model;
 import java.util.ArrayList;
 
 public abstract class StateNode {
-	public int sizeX;
-	public int sizeY;
+	public int width;
+	public int height;
 	public int k;
-	public StateNode(int sizeX, int sizeY, int k){
-		this.sizeX = sizeX;
-		this.sizeY = sizeY;
+	public StateNode(int width, int height, int k){
+		this.width = width;
+		this.height = height;
 		this.k = k;
 	}
 	public abstract double eval();
