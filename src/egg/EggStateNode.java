@@ -19,8 +19,32 @@ public class EggStateNode extends StateNode{
 	}
 	@Override
 	public double eval() {
-		// TODO Auto-generated method stub
-		return 0;
+		double of = 0;
+		int[] eggsInRow = new int[height];
+		int[] eggsInCol = new int[width];
+		int[] eggsInTopLeftDiag = new int[height+width -1];
+		int[] eggsInTopRightDiag = new int[height+width -1];
+		
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				if(board[i][j] == true){
+					eggsInRow[i]++;
+					eggsInCol[j]++;
+					eggsInTopLeftDiag[width -j + i - 1]++;
+					eggsInTopRightDiag[i+j]++;
+				}
+			}
+		}
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				if(board[i][j] == true){
+					if(eggsInRow[i] <= k && eggsInCol[j] <= k && eggsInTopLeftDiag[width -j + i - 1] <= k && eggsInTopRightDiag[i+j] <= k){
+						of++;
+					}
+				}
+			}
+		}
+		return of / (width*k);
 	}
 
 	@Override
