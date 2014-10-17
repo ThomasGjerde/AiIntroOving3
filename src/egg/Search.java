@@ -26,7 +26,9 @@ public class Search {
 		firstNode = initNode;
 		firstTemp = temp;
 		//Starts the search
-		performSearch(firstNode, firstTemp);
+		EggStateNode finalNode = (EggStateNode)performSearch(firstNode, firstTemp);
+		//System.out.println("currentNodeeval " + currentNodeEval);
+		finalNode.printBoard();
 	}
 	
 	//Perfroms the search, starting with the initNode and the user given temperature
@@ -43,7 +45,9 @@ public class Search {
 			
 			ArrayList<StateNode> neighBours = new ArrayList<StateNode>();
 			currentTemp = temp.currentTemp();
+			System.out.println("CurrentTemp " + currentTemp);
 			neighBours = currentNode.getNeighbours();
+			System.out.println("Neighbours size " + neighBours.size());
 			StateNode nextNode = getNextNode(neighBours);
 			currentNodeEval = currentNode.eval();
 			
@@ -52,7 +56,10 @@ public class Search {
 				mEval = nextNodeEval;
 			}//denne er jeg ikke sikker på om vi trenger, sjekken i starten tar seg av dette?
 			if(mEval == 1){
-				return currentNode;
+				System.out.println("her er jeg");
+				System.out.println("nextNode.eval " + nextNode.eval());
+				return nextNode;
+				
 			}
 			
 			double q = ((mEval - currentNodeEval) / currentNodeEval);
@@ -61,8 +68,11 @@ public class Search {
 			
 			if(x>p){
 				currentNode = nextNode;
+				//System.out.println("nextNodeEval " + nextNodeEval);
+				//((EggStateNode)currentNode).printBoard();
 			}else{
 				currentNode = currentNode.getRandomNeighBour(neighBours);
+				//currentNode = nextNode;
 			}
 			
 		}
