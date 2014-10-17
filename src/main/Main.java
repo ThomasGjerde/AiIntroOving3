@@ -7,5 +7,6 @@ public class Main {
 		EggStateNode stateNode = new EggStateNode(10, 10, 2);
 		stateNode.generateInitialState();
 		stateNode.printBoard();
+		//System.out.println("Size: " + stateNode.getNeighbours().size());
 	}
 }

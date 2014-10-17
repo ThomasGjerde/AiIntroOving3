@@ -32,13 +32,22 @@ public class EggStateNode extends StateNode{
 					//Up
 					EggStateNode newNodeUp = new EggStateNode(width,height,k);
 					boolean[][] newBoardUp = generateNewBoard(j, i, UP);
-					newNodeUp.setBoard(newBoardUp);
-					neighbourList.add(newNodeUp);
+					if(newBoardUp != null){
+						newNodeUp.setBoard(newBoardUp);
+						neighbourList.add(newNodeUp);
+					}
 					
-					
+					//Down
+					EggStateNode newNodeDown = new EggStateNode(width,height,k);
+					boolean[][] newBoardDown = generateNewBoard(j, i, DOWN);
+					if(newBoardDown != null){
+						newNodeDown.setBoard(newBoardDown);
+						neighbourList.add(newNodeDown);
+					}
 				}
 			}
 		}
+		return neighbourList;
 	}
 	private boolean[][] generateNewBoard(int eggX, int eggY,int dir){
 		boolean[][] newBoard = new boolean[height][width];
@@ -46,6 +55,9 @@ public class EggStateNode extends StateNode{
 			for(int j = 0; j < width; j++){
 				newBoard[i][j] = board[i][j];
 			}
+		}
+		if((eggY+dir) < 0 || (eggY+dir) >= height){
+			return null;
 		}
 		if(board[eggY + dir][eggX] == true){
 			return null;
